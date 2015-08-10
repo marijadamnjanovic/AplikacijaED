@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,6 +19,26 @@ namespace Aplikacija7.Controllers
 
         }
 
+        //  [HttpGet]
+        //  public ActionResult Dettails()
+        //  {
+        //      return View();
+        //   }
+        //  [HttpPost]
+
+        public ActionResult Details(int? id) {
+
+            //  if (id == null)
+            // return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Employee employee = db.Employees.Find(id);
+            if (id == null) { 
+
+            return HttpNotFound();
+        }
+            return View(employee);
+
+        }
+
         [HttpGet]
         public ActionResult Create() {
             return View();
@@ -27,6 +48,8 @@ namespace Aplikacija7.Controllers
         public ActionResult Create(Employee employee) {
 
             if (ModelState.IsValid) {
+
+
                 db.Employees.Add(employee);
                 db.SaveChanges();
 
@@ -36,6 +59,7 @@ namespace Aplikacija7.Controllers
 
             return View(employee);
         }
+
 
 
     }
